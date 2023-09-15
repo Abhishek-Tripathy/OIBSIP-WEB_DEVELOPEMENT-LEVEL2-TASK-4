@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login and Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #77a8aa;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #FEFFAC;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #df1559;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Login or Register</h1>
+        <form id="loginForm">
+            <label for="loginUsername">Username:</label>
+            <input type="text" id="loginUsername" required>
+            <label for="loginPassword">Password:</label>
+            <input type="password" id="loginPassword" required>
+            <button type="submit">Login</button>
+        </form>
+        <hr>
+        <form id="registrationForm">
+            <h2>Register</h2>
+            <label for="registerUsername">Username:</label>
+            <input type="text" id="registerUsername" required>
+            <label for="registerPassword">Password:</label>
+            <input type="password" id="registerPassword" required>
+            <button type="submit">Register</button>
+        </form>
+        <div id="message"></div>
+    </div>
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const registrationForm = document.getElementById('registrationForm');
+        const messageDiv = document.getElementById('message');
+        
+        // Function to store user credentials in local storage
+        function storeCredentials(username, password) {
+            localStorage.setItem('username', username);
+            localStorage.setItem('password', password);
+        }
+        
+        registrationForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const username = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+        
+            // Store credentials in local storage
+            storeCredentials(username, password);
+        
+            // Clear the registration form
+            registrationForm.reset();
+            messageDiv.textContent = 'Registration Successful!';
+        });
+        loginForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const loginUsername = document.getElementById('loginUsername').value;
+            const loginPassword = document.getElementById('loginPassword').value;
+        
+            // Retrieve stored credentials from local storage
+            const storedUsername = localStorage.getItem('username');
+            const storedPassword = localStorage.getItem('password');
+        
+            if (loginUsername === storedUsername && loginPassword === storedPassword) {
+                window.location.href = 'success.html';
+            } else {
+                messageDiv.textContent = 'Invalid credentials. Please try again.';
+                loginForm.reset();
+            }
+        });
+    </script>
+</body>
+</html>
